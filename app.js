@@ -13,7 +13,7 @@ var app = express();
 
 ///Set Up Mongoose Connection:
 var mongoose = require('mongoose');
-var mongoDB = "mongodb+srv://bizbee1:8467FrOgGeR1215@crud-boiler.viltq.mongodb.net/crud-boiler?retryWrites=true&w=majority";
+var mongoDB = "mongodb+srv://bizbee1:password@crud-boiler.viltq.mongodb.net/crud-boiler?retryWrites=true&w=majority";
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));

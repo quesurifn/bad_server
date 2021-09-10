@@ -45,8 +45,8 @@ exports.user_create_post = function(req, res) {
 };
 
 //Display User delete on GET
-exports.user_delete_get = function(req, res) {
-    res.send('User delete on GET');
+exports.user_delete_get = function(req, res, next) {
+    User.findById(req.params.id).exec
 };
 
 //Display User delete on POST
