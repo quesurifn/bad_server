@@ -7,7 +7,16 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
+const userController = require('./controllers/userController');
+
 var app = express();
+
+///Set Up Mongoose Connection:
+var mongoose = require('mongoose');
+var mongoDB = "mongodb+srv://bizbee1:8467FrOgGeR1215@crud-boiler.viltq.mongodb.net/crud-boiler?retryWrites=true&w=majority";
+mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
