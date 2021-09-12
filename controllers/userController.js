@@ -19,12 +19,13 @@ exports.login = async (req, res) => {
         res.json({access: "denied"})
     }
 
+    // Bcrypt method to compare encrypted with unencrypted with encrypted to see if the password the user sent matches the encrypted one in the database
     const authorized = await bcrypt.compare(req.body.password, user.password)
     if(!authorized) {
         res.json({access: "denied"})
     }
 
-    res.json({access: "granted"})
+    res.json({access: "granted", key:"send some sort of key here"})
 }
 
 
