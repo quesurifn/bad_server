@@ -14,8 +14,8 @@ UserSchema.pre('save', async (next) => {
     // because this is a method on user schema, we can call the keyword this. `this` refers to this object in this case being user schema so
     // this.password means UserSchema.password but we use this because we're assigning to password within a method on the user schema
 
-    // So below we are taking the value in password, encrypting it and then re-assigning it to password. The random number helps the computer encrypt it better
-    this.password = await bcrypt.hash(this.password, 123012313123)
+    // So below we are taking the value in password, encrypting it and then re-assigning it to password. The random number helps the computer encrypt it better (see the random number in .env file)
+    this.password = await bcrypt.hash(this.password, process.env.BCRYPT_SECRET)
 
     next(null)
 })

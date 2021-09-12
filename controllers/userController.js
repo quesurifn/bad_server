@@ -1,4 +1,7 @@
 const User = require('../models/user');
+const bcrypt = require("bcryptjs")
+// Notice above that you can use '' and "" interchangeably in JS 
+
 // const async = require('async');
 // We don't need this library anymore. In most recent JS versions Async / await uses keywords
 
@@ -9,6 +12,20 @@ exports.index = async (_req, res) => {
     // We use json not res.render because we're not doing views. Only building a json api
     res.json(users)
 };
+
+exports.login = async (req, res) => {
+    const user = await User.find({email: req.body.email})
+    if (!user) { // if no user access denied
+        res.json({access: "denied"})
+    }
+
+    const authorized = await bcrypt.compare(req.body.password, user.password)
+    if(!authorized) {
+        res.json({access: "denied"})
+    }
+
+    res.json({access: "granted"})
+}
 
 
 //Create User

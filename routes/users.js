@@ -20,4 +20,6 @@ router.get('/:id', user_controller.get);
 //POST request for deleting a User
 router.delete('/:id', user_controller.delete);
 
+router.post('/login', user_controller.login)
+
 module.exports = router;
