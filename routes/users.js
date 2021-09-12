@@ -4,10 +4,6 @@ var router = express.Router();
 //Require controller modules
 const user_controller = require('../controllers/userController');
 
-/* GET users listing. */
-//router.get('/', function(req, res, next) {
-  //res.send('respond with a resource');
-//});
 
 //Route is actually /users/ see app.js line 
 router.get('/', user_controller.index);
@@ -18,7 +14,7 @@ router.post('/', user_controller.create);
 //PUT generally means update
 router.put('/', user_controller.update);
 
-//GET by id
+//GET by id; allow to be called like /users/1 (1 being user id) id is available in controller via req.params.id
 router.get('/:id', user_controller.get);
 
 //POST request for deleting a User
