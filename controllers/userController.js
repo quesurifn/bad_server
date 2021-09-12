@@ -1,65 +1,38 @@
 const User = require('../models/user');
-const async = require('async');
+// const async = require('async');
+// We don't need this library anymore. In most recent JS versions Async / await uses keywords
 
-exports.index = function(req, res, next) {
-    
-    User.find()
-    .populate('user')
-    .exec(function (err, results) {
-        if (err) { return next(err); }
-        //Successful so render
-        res.render('user_index', { title: 'User Home', error: err, data: results });
-    })
-};
-
-//Display list of all Users
-exports.user_list = (req, res) => {
-
-    User.find((err, docs) => {
-        res.render('user_list', { title: 'List of Users', users: docs });
-    });
-
-    //User.find()
-    //.populate('user')
-    //.exec(function (err, list_users) {
-        //if (err) {return next(err); }
-        //Successful so render
-        //res.render('user_index', { title: 'List of Active Users', user_list: list_users });
-    //});
+// => removes req for function keyword; async allows await
+exports.index = async (_req, res) => {
+    // We're not using req so we prefix it with _
+    const users = await User.find({})
+    // We use json not res.render because we're not doing views. Only building a json api
+    res.json(users)
 };
 
 
-//Display detail page of a specific User
-exports.user_detail = function(req, res) {
-    res.send('User Detail: ' + req.params.id);
+//Create User
+exports.create = async (req, res) => {
+    const user = await User.create(req.body)
+    res.json(user)
 };
 
-//Display User create on GET
-exports.user_create_get = function(req, res) {
-    res.send('something');
-};
-
-//Display User create on POST
-exports.user_create_post = function(req, res) {
-    res.send('User create on POST');
+// Get user by user id
+exports.get = async (req, res) => {
+    // since :id is in the router path we can do req.prams.id
+    const user = await User.findById(req.params.id)
+    res.json(user)
 };
 
 //Display User delete on GET
-exports.user_delete_get = function(req, res, next) {
-    User.findById(req.params.id).exec
+exports.update = async (req, res) => {
+    const user = await User.updateOne({_id: req.body._id}, req.body)
+    res.json(user)
 };
 
 //Display User delete on POST
-exports.user_delete_post = function(req, res) {
-    res.send('User delete on POST');
+exports.delete = async (req, res) => {
+    // since :id is in the router path we can do req.prams.id
+    const user = await User.deleteOne({_id: req.params.id})
+    res.json(user)
 };
-
-//Display User update on GET
-exports.user_update_get = function(req, res) {
-    res.send('User update on GET');
-};
-
-//Display User update on POST
-exports.user_update_post = function(req, res) {
-    res.send('User update on POST') 
-}
